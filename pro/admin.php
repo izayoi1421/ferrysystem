@@ -168,7 +168,7 @@ $fullname =  "System Administrator";
                             <?php
                             echo (@$_GET['page'] == 'payment') ? 'active' : '';
                             ?>">
-                                <i class="nav-icon fas fa-dollar-sign"></i>
+                                <i class="nav-icon fas">&#8369;</i>
                                 <p>
                                     Payments
                                 </p>

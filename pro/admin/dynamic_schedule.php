@@ -84,9 +84,7 @@ if (isset($_GET['free'], $_GET['id'])) {
                                                     value="<?php echo $id ?>" required id="">
                                                 <input type="hidden" class="form-control" name="del_train"
                                                     value="<?php echo $id ?>" required id="">
-                                                <button type="submit"
-                                                   
-                                                    class="btn btn-danger">
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure about this?')">
                                                     Delete
                                                 </button>
                                             </form>

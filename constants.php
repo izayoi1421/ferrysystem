@@ -930,7 +930,7 @@ function sendUpdatePolicy($msg, $desc)
 {
   $msg = connect()->real_escape_string($msg);
   $$desc = connect()->real_escape_string($desc);
-  $stmt = connect()->query("INSERT INTO policy (policy, description) VALUES ('$desc', '$msg')");
+  $stmt = connect()->query("INSERT INTO policy (entry, description) VALUES ('$desc', '$msg')");
   if ($stmt) return 1;
   return 0;
 }

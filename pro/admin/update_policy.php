@@ -51,7 +51,7 @@ $me = "?page=$source";
                                 $query = connect()->query("SELECT * FROM policy");
 
                                 while ($fetch = $query->fetch_assoc()) {
-                                    $id = $fetch['p_id'];
+                                    $id = $fetch['id'];
 
 
                                 ?>
@@ -60,39 +60,34 @@ $me = "?page=$source";
                                     <td>
                                         <?php echo ++$sn; ?>
                                     </td>
+                                    <td><b>
+                                        <?php echo $fetch['entry']; ?>
+                                    </td></b>
                                     <td>
-                                        <?php echo $fetch['description']; ?>
+                                        <?php echo $fetch['description'] == NULL ? '-- No Response Yet --' : $fetch['description']; ?>
                                     </td>
-                                    <td>
-                                        <?php echo $fetch['policy'] == NULL ? '-- No Response Yet --' : $fetch['policy']; ?>
-                                    </td>
-                                    <td>
+                                    <td>                                        
                                         <form method="POST">
-                                            <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                data-target="#edit<?php echo $fetch['p_id']; ?>">
-                                                Edit
-                                            </button> -
-
-                                            <input type="hidden" class="form-control" name="del_train"
-                                                value="<?php echo $fetch['id'] ?>" required id="">
-                                            <button type="submit" onclick="return confirm('Are you sure about this?')"
-                                                class="btn btn-danger">
-                                                Delete
-                                            </button>
-                                        </form>
+                                                <button type="button" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#edit<?php echo $id ?>">
+                                                    Edit
+                                                </button> -
+                                                </form>  
+                                                <form method="POST">                                      
+                                                <input type="hidden" class="form-control" name="del_policy"
+                                                    value="<?php echo $id ?>" required id="">
+                                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure about this?')">
+                                                    Delete
+                                                </button>
+                                            </form>                                            
                                     </td>
                                 </tr>
 
-                                <div class="modal fade" id="edit<?php echo $fetch['p_id'] ?>">
+                                <div class="modal fade" id="edit<?php echo $id ?>">
                                     <div class="modal-dialog modal-lg">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h4 class="modal-title">Editing
-                                                    <?php echo $fetch['description'];
-
-
-                                                    ?>
-                                                </h4>
+                                                <h4 class="modal-title">Editing</h4>
                                                 <button type="button" class="close" data-dismiss="modal"
                                                     aria-label="Close">
                                                     <span aria-hidden="true">&times;</span>
@@ -101,18 +96,18 @@ $me = "?page=$source";
                                             <div class="modal-body">
                                                 <form action="" method="post">
                                                     <input type="hidden" class="form-control" name="id"
-                                                        value="<?php echo $id ?>" required id="">
-                                                    <p>Policy : <input type="text" class="form-control"
-                                                            name="policy" value="<?php echo $fetch['description'] ?>"
-                                                            required minlength="3" id=""></p>
-                                                    <p>Description : <input type="text" class="form-control" name="name"
-                                                            value="<?php echo $fetch['policy'] ?>" required
+                                                            value="<?php echo $id ?>" required id="">
+                                                    <p>Policy : <input type="text" class="form-control" name="entry"
+                                                            value="<?php echo $fetch['entry'] ?>" required
+                                                            minlength="3" id=""></p>
+                                                    <p>Description : <input type="text" class="form-control" name="description"
+                                                            value="<?php echo $fetch['description'] ?>" required
                                                             minlength="3" id=""></p>
 
 
                                                     <p>
 
-                                                        <input class="btn btn-info" type="submit" value="Edit Train"
+                                                        <input class="btn btn-info" type="submit" value="Edit Policy"
                                                             name='edit'>
                                                     </p>
                                                 </form>
@@ -148,7 +143,7 @@ $me = "?page=$source";
     <div class="modal-dialog modal-lg">
         <div class="modal-content" align="center">
             <div class="modal-header">
-                <h4 class="modal-title">Send New Feedback </h4>
+                <h4 class="modal-title">Add New Policy</h4>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -158,9 +153,12 @@ $me = "?page=$source";
                 <form action="" method="post">
                     <div class="row">
                         <div class="col-sm-12">
-                            <div class="form-group">
-                                Name Of Policy : <textarea name="policy" required minlength="2" id="" cols="5" rows="10"
+                            <div class="form-outline">
+                                Name Of Policy : 
+                                <textarea name="entry" id="pentry" required minlength="2" id="" cols="5" rows="5"
                                     class="form-control"></textarea>
+                                <label class="form-label" for="pentry">Message</label>
+
                             </div>
 
                             <div class="form-group">
@@ -188,47 +186,45 @@ $me = "?page=$source";
 
 if (isset($_POST['sendpolicy'])) {
 
-    $policy = $_POST['policy'];
+    $policy = $_POST['entry'];
     $desc = $_POST['description'];
     $send = sendUpdatePolicy($policy, $desc);
     echo $send;
     if ($send) {
-        alert('Policy Has been Updated(The updated Policy will be seen in costumer homepage)');
+        alert('New policy has been added(The updated Policy will be seen in costumer homepage)');
     } else {
-        alert('Policy Has not been Updated ');
+        alert('Fails to add a new policy');
     }
 }
+
 if (isset($_POST['edit'])) {
-    $name = $_POST['name'];
-    $first_seat = $_POST['first_seat'];
-    $second_seat = $_POST['second_seat'];
+
+    $policy = $_POST['entry'];
+    $description = $_POST['description'];
     $id = $_POST['id'];
-    if (!isset($name, $first_seat, $second_seat)) {
+    if (!isset($policy, $description, $id )) {
         alert("Fill Form Properly!");
-    } else {
+    }
+     else {
         $conn = connect();
-        //Check if train exists
-        $check = $conn->query("SELECT * FROM train WHERE name = '$name' ")->num_rows;
-        if ($check == 2) {
-            alert("Train name exists");
-        } else {
-            $ins = $conn->prepare("UPDATE train SET name = ?, first_seat = ?, second_seat = ? WHERE id = ?");
-            $ins->bind_param("sssi", $name, $first_seat, $second_seat, $id);
-            $ins->execute();
-            alert("Train Modified!");
-            load($_SERVER['PHP_SELF'] . "$me");
-        }
+        $ins = $conn->prepare("UPDATE policy SET entry = ?, description = ? WHERE id = ?");
+        $ins->bind_param("ssi", $policy, $description, $id);
+        $ins->execute();
+        alert("policy updated");
+        load($_SERVER['PHP_SELF'] . "$me");
     }
 }
+
 if (isset($_POST['del_policy'])) {
     $con = connect();
-    $conn = $con->query("DELETE FROM train WHERE id = '" . $_POST['del_train'] . "'");
+    $conn = $con->query("DELETE FROM policy WHERE id = '" . $_POST['del_policy'] . "'");
     if ($con->affected_rows < 1) {
-        alert("Train Could Not Be Deleted. This Train Has Been Tied To Another Data!");
+        alert("Policy Could Not Be Deleted. This Policy Has Been Tied To Another Data!");
         load($_SERVER['PHP_SELF'] . "$me");
     } else {
-        alert("Train Deleted!");
+        alert("Policy Deleted!");
         load($_SERVER['PHP_SELF'] . "$me");
     }
 }
+
 ?>

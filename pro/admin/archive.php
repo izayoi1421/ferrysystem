@@ -62,7 +62,7 @@ $me = "?page=$source";
                                                 </form>
                                                 <form method="POST">
                                                     <input type="hidden" class="form-control" name="del_train" value="<?php echo $id ?>" required id="">
-                                                    <button type="submit" class="btn btn-danger">
+                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to permanently delete this schedule?')">
                                                         Delete
                                                     </button>
                                                 </form>
