@@ -170,6 +170,17 @@ $fullname =  "System Administrator";
                                 </p>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a href="admin.php?page=update_policy" class="nav-link      <?php
+                                                                                    echo (@$_GET['page'] == 'update_policy') ? 'active' : '';
+                                                                                    ?>">
+                                <i class="nav-icon fas fa-mail-bulk"></i>
+                                <p>
+                                    Update Policy
+                                </p>
+                            </a>
+                        </li>
+                        
 
                         <li class="nav-item">
                             <a href="admin.php?page=search" class="nav-link      <?php
