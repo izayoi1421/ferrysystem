@@ -49,33 +49,49 @@ if (!isset($file_access)) die("Direct File Access Denied");
                                 
 
                                 <?php
-    
-                                    $sql = "SELECT COUNT(free) as fcount FROM schedule WHERE free = 1";
-                                    $conn = connect()->query($sql);
-                                    $row = $conn->fetch_assoc();
-                                    echo $row['fcount'];
-                                                               
-
-                                    $fee = ($_SESSION['amount'] = getFee($schedule_id, $class));
-                                    
+                                   $sql = "SELECT COUNT(id) as fcount FROM schedule WHERE free = 1 AND id = $schedule_id";
+                                   $conn = connect()->query($sql);
+                                   $row = $conn->fetch_assoc();
+                                   $hakdoggi = $row['fcount'];
+                                   $fee = ($_SESSION['amount'] = getFee($schedule_id, $class));
                                     $discount = ($fee * $classification );
-                                    
-                                    echo $number," x ₱", $fee, " = ₱", ($fee * $number), "<hr/>";
-
-                                    $fee = $fee * $number;
-                                    $amount = intval($fee);
-                                    $vat = ceil($fee * 0.01);
-                                    echo "V.A.T Charges = ₱$vat<br/><br/><hr/>";
-                                    echo "Discounted = ₱$discount<br/><br/><hr/>";
-                                    echo "Total = ₱", $total = 0;
-                                    
-                                    $fee =  intval($total) ."00";
+                                    if ($hakdoggi == 1){
+                                        echo $number," x ₱", $fee, " = ₱", ($fee * $number), "<hr/>";
+                                        $fee = $fee * $number;
+                                        $amount = intval($fee);
+                                        echo "V.A.T Charges = ₱$vat<br/><br/><hr/>";
+                                        echo "Discounted = ₱$discount<br/><br/><hr/>";
+                                        echo "Total = ₱", $total = 1;
+                                        $fee =  ($total) . "00";
                                     $_SESSION['amount'] =  $total;
                                     $_SESSION['original'] =  $fee;
                                     $_SESSION['schedule'] =  $schedule_id;
                                     $_SESSION['no'] =  $number;
                                     $_SESSION['class'] =  $class;
+                                    
+                                    }else{
+                                        echo $number," x ₱", $fee, " = ₱", ($fee * $number), "<hr/>";
+                                        $fee = $fee * $number;
+                                        $amount = intval($fee);
+                                        $vat = ceil($fee * 0.01);
+                                        echo "V.A.T Charges = ₱$vat<br/><br/><hr/>";
+                                        echo "Discounted = ₱$discount<br/><br/><hr/>";
+                                        echo "Total = ₱", $total = ($amount - $discount) + $vat;
+                                        $fee =  intval($total) . "00";
+                                    $_SESSION['amount'] =  $total;
+                                    $_SESSION['original'] =  $fee;
+                                    $_SESSION['schedule'] =  $schedule_id;
+                                    $_SESSION['no'] =  $number;
+                                    $_SESSION['class'] =  $class;
+                                    }
+                                   
+                                    
+                                    
+                                    
+                                  
                                     ?>
+                                   
+                                    
                             </div>
                             <a href="pay.php"><button
                                     onclick="return confirm('You will be directed to make your payment.\nPayment finalizes your booking!')"
