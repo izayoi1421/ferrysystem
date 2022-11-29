@@ -410,11 +410,9 @@ if (isset($_POST['submit'])) {
         alert("Fill Form Properly!");
     } else {
         $conn = connect();
-        $ins = $conn->prepare("INSERT INTO `schedule`(`train_id`, `route_id`, `date`, `time`, `first_fee`, `second_fee`) VALUES (?,?,?,?,?,?)");
-        $ins = $conn->prepare("INSERT INTO `archive`(`train_id`, `route_id`, `date`, `time`, `first_fee`, `second_fee`) VALUES (?,?,?,?,?,?)");
+        $ins = $conn->prepare("INSERT INTO `schedule`(`train_id`, `route_id`, `date`, `time`, `first_fee`, `second_fee`) VALUES (?,?,?,?,?,?)");        
         $ins->bind_param("iissii", $train_id, $route_id, $date, $time, $first_fee, $second_fee);
         $ins->execute();
-        alert("Schedule Added!");
         load($_SERVER['PHP_SELF'] . "$me");
     }
 }
@@ -489,15 +487,23 @@ if (isset($_POST['edit'])) {
         load($_SERVER['PHP_SELF'] . "$me");
     }
 }
-
+  
 if (isset($_POST['del_train'])) {
     $con = connect();
-    $conn = $con->query("DELETE FROM schedule WHERE id = '" . $_POST['del_train'] . "'");
+    $sbutton = $_POST['del_train'];
+    $id = $sbutton;
+    $conn = $con->query("INSERT INTO archive SELECT * FROM schedule");
+    $conn = $con->query("DELETE FROM schedule WHERE id = $sbutton");
+    
+    
+
     if ($con->affected_rows < 1) {
         alert("Schedule Could Not Be Deleted. This Route Has Been Tied To Another Data!");
         load($_SERVER['PHP_SELF'] . "$me");
     } else {
-
+        
+        alert("Schedule Deleted!");
+        load($_SERVER['PHP_SELF'] . "$me");
     }
 }
 ?>
