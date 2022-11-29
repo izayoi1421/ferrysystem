@@ -77,8 +77,7 @@ $fullname =  "System Administrator";
 
                 <!-- Sidebar Menu -->
                 <nav class="mt-2">
-                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
-                        data-accordion="false">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                         <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
                         <li class="nav-item">
@@ -117,9 +116,22 @@ $fullname =  "System Administrator";
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="admin.php?page=route" class="nav-link      <?php
-                                                                                echo (@$_GET['page'] == 'route') ? 'active' : '';
-                                                                                ?>">
+                            <a href="admin.php?page=archive" class="nav-link 
+                            <?php
+                            echo (@$_GET['page'] == 'archive') ? 'active' : '';
+                            ?>
+                            ">
+                                <i class="nav-icon fas fa-archive" aria-hidden="true"></i>
+                                <p>
+                                    Archive
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="admin.php?page=route" class="nav-link      
+                            <?php
+                            echo (@$_GET['page'] == 'route') ? 'active' : '';
+                            ?>">
                                 <i class="nav-icon fas fa-route"></i>
                                 <p>
                                     Routes
@@ -128,9 +140,10 @@ $fullname =  "System Administrator";
                         </li>
                         </li>
                         <li class="nav-item">
-                            <a href="admin.php?page=train" class="nav-link      <?php
-                                                                                echo (@$_GET['page'] == 'train') ? 'active' : '';
-                                                                                ?>">
+                            <a href="admin.php?page=train" class="nav-link      
+                            <?php
+                            echo (@$_GET['page'] == 'train') ? 'active' : '';
+                            ?>">
                                 <i class="nav-icon fas fa-train"></i>
                                 <p>
                                     Ferry
@@ -139,9 +152,10 @@ $fullname =  "System Administrator";
                         </li>
 
                         <li class="nav-item">
-                            <a href="admin.php?page=report" class="nav-link      <?php
-                                                                                    echo (@$_GET['page'] == 'report') ? 'active' : '';
-                                                                                    ?>">
+                            <a href="admin.php?page=report" class="nav-link      
+                            <?php
+                            echo (@$_GET['page'] == 'report') ? 'active' : '';
+                            ?>">
                                 <i class="nav-icon fas fa-file-pdf"></i>
                                 <p>
                                     Report
@@ -150,9 +164,10 @@ $fullname =  "System Administrator";
 
                         </li>
                         <li class="nav-item">
-                            <a href="admin.php?page=payment" class="nav-link      <?php
-                                                                                    echo (@$_GET['page'] == 'payment') ? 'active' : '';
-                                                                                    ?>">
+                            <a href="admin.php?page=payment" class="nav-link      
+                            <?php
+                            echo (@$_GET['page'] == 'payment') ? 'active' : '';
+                            ?>">
                                 <i class="nav-icon fas fa-dollar-sign"></i>
                                 <p>
                                     Payments
@@ -161,9 +176,10 @@ $fullname =  "System Administrator";
                         </li>
 
                         <li class="nav-item">
-                            <a href="admin.php?page=feedback" class="nav-link      <?php
-                                                                                    echo (@$_GET['page'] == 'feedback') ? 'active' : '';
-                                                                                    ?>">
+                            <a href="admin.php?page=feedback" class="nav-link
+                            <?php
+                            echo (@$_GET['page'] == 'feedback') ? 'active' : '';
+                            ?>">
                                 <i class="nav-icon fas fa-mail-bulk"></i>
                                 <p>
                                     Feedbacks
@@ -171,21 +187,23 @@ $fullname =  "System Administrator";
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="admin.php?page=update_policy" class="nav-link      <?php
-                                                                                    echo (@$_GET['page'] == 'update_policy') ? 'active' : '';
-                                                                                    ?>">
+                            <a href="admin.php?page=update_policy" class="nav-link      
+                            <?php
+                            echo (@$_GET['page'] == 'update_policy') ? 'active' : '';
+                            ?>">
                                 <i class="nav-icon fas fa-mail-bulk"></i>
                                 <p>
                                     Update Policy
                                 </p>
                             </a>
                         </li>
-                        
+
 
                         <li class="nav-item">
-                            <a href="admin.php?page=search" class="nav-link      <?php
-                                                                                    echo (@$_GET['page'] == 'search') ? 'active' : '';
-                                                                                    ?>">
+                            <a href="admin.php?page=search" class="nav-link      
+                            <?php
+                            echo (@$_GET['page'] == 'search') ? 'active' : '';
+                            ?>">
                                 <i class="nav-icon fas fa-search"></i>
                                 <p>
                                     Search
@@ -228,6 +246,8 @@ $fullname =  "System Administrator";
                 include 'admin/index.php';
             elseif ($_GET['page'] == 'dynamic')
                 include 'admin/dynamic_schedule.php';
+            elseif ($_GET['page'] == 'archive')
+                include 'admin/archive.php';
             elseif ($_GET['page'] == 'report')
                 include 'admin/report.php';
             elseif ($_GET['page'] == 'train')
@@ -300,26 +320,26 @@ $fullname =  "System Administrator";
     <script src="dist/js/pages/dashboard3.js"></script>
 
     <script>
-    $(function() {
-        $("#example1").DataTable();
-    });
+        $(function() {
+            $("#example1").DataTable();
+        });
     </script>
     <?php if (@$_GET['page'] == 'query') { ?>
-    <script src="plugins/jquery-knob/jquery.knob.min.js"></script>
-    <!-- Sparkline -->
-    <script src="plugins/sparkline/jquery.sparkline.min.js"></script>
+        <script src="plugins/jquery-knob/jquery.knob.min.js"></script>
+        <!-- Sparkline -->
+        <script src="plugins/sparkline/jquery.sparkline.min.js"></script>
 
-    <!-- page script -->
-    <script>
-    $(function() {
-        /* jQueryKnob */
+        <!-- page script -->
+        <script>
+            $(function() {
+                /* jQueryKnob */
 
-        $('.knob').knob({
-            draw: function() {}
-        })
+                $('.knob').knob({
+                    draw: function() {}
+                })
 
-    })
-    </script>
+            })
+        </script>
     <?php } ?>
 
 </body>

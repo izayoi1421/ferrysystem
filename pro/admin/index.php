@@ -143,10 +143,10 @@ if (!isset($file_access)) die("Direct File Access Denied");
             $sql = "SELECT COUNT(cancel) as success_count FROM booked WHERE cancel = 0";
             $conn = connect()->query($sql);
             $row = $conn->fetch_assoc();
-
+            $success= $row['success_count'];
             foreach ($row as $i) {
 
-                $s_count[] = $row['success_count'];
+                $s_count[] =  $success;
             }
 
             $sql = "SELECT COUNT(cancel) as failed_count FROM booked WHERE cancel = 1";
