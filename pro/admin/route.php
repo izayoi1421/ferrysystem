@@ -15,106 +15,92 @@ $me = "?page=$source"
                             <h3 class="card-title">
                                 All Routes</h3>
                             <div class='float-right'>
-                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                    data-target="#add">
+                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add">
                                     Add New Route &#128645;
-                                </button></div>
+                                </button>
+                            </div>
                         </div>
 
                         <div class="card-body">
-
-                            <table id="example1" style="align-items: stretch;"
-                                class="table table-hover w-100 table-bordered table-striped<?php //
-                                                                                                                                            ?>">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>From</th>
-                                        <th>To</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $row = $conn->query("SELECT * FROM route");
-                                    if ($row->num_rows < 1) echo "No Records Yet";
-                                    $sn = 0;
-                                    while ($fetch = $row->fetch_assoc()) {
-                                        $id = $fetch['id'];
-                                    ?>
-
-                                    <tr>
-                                        <td><?php echo ++$sn; ?></td>
-                                        <td><?php echo $fetch['start']; ?></td>
-                                        <td><?php echo $fetch['stop'];
-
-                                                $fullname = $fetch['start'] . " to " . $fetch['stop']; ?></td>
-                                        <td>
-                                            <form method="POST">
-                                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#edit<?php echo $id ?>">
-                                                    Edit
-                                                </button> -
-
-                                                <input type="hidden" class="form-control" name="del_train"
-                                                    value="<?php echo $id ?>" required id="">
-                                                <button type="submit"
-                                                    onclick="return confirm('Are you sure about this?')"
-                                                    class="btn btn-danger">
-                                                    Delete
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-
-                                    <div class="modal fade" id="edit<?php echo $id ?>">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">Editing <?php echo $fullname;
-
-
-                                                                                        ?> &#128642;</h4>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form action="" method="post">
-                                                        <input type="hidden" class="form-control" name="id"
-                                                            value="<?php echo $id ?>" required id="">
-                                                        <p>From : <input type="text" class="form-control"
-                                                                value="<?php echo $fetch['start'] ?>" name="start"
-                                                                required id="">
-                                                        </p>
-                                                        <p> To : <input type="text" class="form-control"
-                                                                value="<?php echo $fetch['stop'] ?>" name="stop"
-                                                                required id="">
-                                                        </p>
-                                                        <p>
-
-                                                            <input class="btn btn-info" type="submit" value="Edit Route"
-                                                                name='edit'>
-                                                        </p>
-                                                    </form>
-                                                    <div class="modal-footer justify-content-between">
-                                                        <button type="button" class="btn btn-default"
-                                                            data-dismiss="modal">Close</button>
-                                                    </div>
-                                                </div>
-                                                <!-- /.modal-content -->
-                                            </div>
-                                            <!-- /.modal-dialog -->
-                                        </div>
-                                        <!-- /.modal -->
+                            <div class="table-responsive">
+                                <table id="example1" style="align-items: stretch;" class="table table-hover w-100 table-bordered table-striped<?php //
+                                                                                                                                                ?>">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>From</th>
+                                            <th>To</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                         <?php
-                                    }
+                                        $row = $conn->query("SELECT * FROM route");
+                                        if ($row->num_rows < 1) echo "No Records Yet";
+                                        $sn = 0;
+                                        while ($fetch = $row->fetch_assoc()) {
+                                            $id = $fetch['id'];
                                         ?>
 
-                                </tbody>
-                               
-                            </table>
+                                            <tr>
+                                                <td><?php echo ++$sn; ?></td>
+                                                <td><?php echo $fetch['start']; ?></td>
+                                                <td><?php echo $fetch['stop'];
+
+                                                    $fullname = $fetch['start'] . " to " . $fetch['stop']; ?></td>
+                                                <td>
+                                                    <form method="POST">
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit<?php echo $id ?>">
+                                                            Edit
+                                                        </button> -
+
+                                                        <input type="hidden" class="form-control" name="del_train" value="<?php echo $id ?>" required id="">
+                                                        <button type="submit" onclick="return confirm('Are you sure about this?')" class="btn btn-danger">
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+
+                                            <div class="modal fade" id="edit<?php echo $id ?>">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Editing <?php echo $fullname;
+
+
+                                                                                            ?> &#128642;</h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="" method="post">
+                                                                <input type="hidden" class="form-control" name="id" value="<?php echo $id ?>" required id="">
+                                                                <p>From : <input type="text" class="form-control" value="<?php echo $fetch['start'] ?>" name="start" required id="">
+                                                                </p>
+                                                                <p> To : <input type="text" class="form-control" value="<?php echo $fetch['stop'] ?>" name="stop" required id="">
+                                                                </p>
+                                                                <p>
+
+                                                                    <input class="btn btn-info" type="submit" value="Edit Route" name='edit'>
+                                                                </p>
+                                                            </form>
+                                                            <div class="modal-footer justify-content-between">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.modal-content -->
+                                                    </div>
+                                                    <!-- /.modal-dialog -->
+                                                </div>
+                                                <!-- /.modal -->
+                                            <?php
+                                        }
+                                            ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>

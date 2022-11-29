@@ -18,66 +18,65 @@ $me = "?page=$source";
                         </div>
 
                         <div class="card-body">
-
-                            <table id="example1" style="align-items: stretch;" class="table table-hover w-100 table-bordered table-striped<?php //
-                                                                                                                                            ?>">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Ferry</th>
-                                        <th>Route</th>
-                                        <th>F.C Fee</th>
-                                        <th>S.C Fee</th>
-                                        <th>Total Bookings</th>
-                                        <th>Date/Time</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $row = $conn->query("SELECT * FROM archive ORDER BY id DESC");
-
-                                    if ($row->num_rows < 1) echo "No Records Yet";
-                                    $sn = 0;
-                                    while ($fetch = $row->fetch_assoc()) {
-                                        $id = $fetch['id']; ?><tr>
-                                            <td><?php echo ++$sn; ?></td>
-                                            <td><?php echo getTrainName($fetch['train_id']); ?></td>
-                                            <td><?php echo getRoutePath($fetch['route_id']);
-                                                $fullname = " Schedule" ?></td>
-                                            <td>₱ <?php echo ($fetch['first_fee']); ?></td>
-                                            <td>₱ <?php echo ($fetch['second_fee']); ?></td>
-                                            <td><?php $array = getTotalBookByType2($id);
-                                                echo (($array['first'] - $array['first_booked'])), " Seat(s) Available for First Class" . "<hr/>" . ($array['second'] - $array['second_booked']) . " Seat(s) Available for Second Class";
-                                                ?></td>
-                                            <td><?php echo $fetch['date'], " / ", formatTime($fetch['time']); ?></td>
-
-                                            <td>
-                                                <form method="POST">
-                                                    <input type="hidden" class="form-control" name="res_train" value="<?php echo $id ?>" required id="">
-                                                    <input type="hidden" class="form-control" name="rem_train" value="<?php echo $id ?>" required id="">
-                                                    <button type="submit" class="btn btn-primary">
-                                                        Restore
-                                                    </button> -
-                                                </form>
-                                                <form method="POST">
-                                                    <input type="hidden" class="form-control" name="del_train" value="<?php echo $id ?>" required id="">
-                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to permanently delete this schedule?')">
-                                                        Delete
-                                                    </button>
-                                                </form>
-                                            </td>
-
+                            <div class="table-responsive">
+                                <table id="example1" style="align-items: stretch;" class="table table-hover w-100 table-bordered table-striped<?php //
+                                                                                                                                                ?>">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Ferry</th>
+                                            <th>Route</th>
+                                            <th>F.C Fee</th>
+                                            <th>S.C Fee</th>
+                                            <th>Total Bookings</th>
+                                            <th>Date/Time</th>
+                                            <th>Actions</th>
                                         </tr>
-
-                                        
+                                    </thead>
+                                    <tbody>
                                         <?php
-                                    }
+                                        $row = $conn->query("SELECT * FROM archive ORDER BY id DESC");
+
+                                        if ($row->num_rows < 1) echo "No Records Yet";
+                                        $sn = 0;
+                                        while ($fetch = $row->fetch_assoc()) {
+                                            $id = $fetch['id']; ?><tr>
+                                                <td><?php echo ++$sn; ?></td>
+                                                <td><?php echo getTrainName($fetch['train_id']); ?></td>
+                                                <td><?php echo getRoutePath($fetch['route_id']);
+                                                    $fullname = " Schedule" ?></td>
+                                                <td>₱ <?php echo ($fetch['first_fee']); ?></td>
+                                                <td>₱ <?php echo ($fetch['second_fee']); ?></td>
+                                                <td><?php $array = getTotalBookByType2($id);
+                                                    echo (($array['first'] - $array['first_booked'])), " Seat(s) Available for First Class" . "<hr/>" . ($array['second'] - $array['second_booked']) . " Seat(s) Available for Second Class";
+                                                    ?></td>
+                                                <td><?php echo $fetch['date'], " / ", formatTime($fetch['time']); ?></td>
+
+                                                <td>
+                                                    <form method="POST">
+                                                        <input type="hidden" class="form-control" name="res_train" value="<?php echo $id ?>" required id="">
+                                                        <input type="hidden" class="form-control" name="rem_train" value="<?php echo $id ?>" required id="">
+                                                        <button type="submit" class="btn btn-primary">
+                                                            Restore
+                                                        </button> -                                                    
+                                                        <input type="hidden" class="form-control" name="del_train" value="<?php echo $id ?>" required id="">
+                                                        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to permanently delete this schedule?')">
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                </td>
+
+                                            </tr>
+
+
+                                        <?php
+                                        }
                                         ?>
 
-                                </tbody>
+                                    </tbody>
 
-                            </table>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -338,13 +337,13 @@ if (isset($_POST['submit2'])) {
 }
 
 
-if (isset($_POST['res_train'],$_POST['rem_train'])) {
+if (isset($_POST['res_train'], $_POST['rem_train'])) {
 
     $con = connect();
     $sbutton = $_POST['res_train'];
     $id = $_POST['rem_train'];
     $conn = $con->query("INSERT INTO schedule SELECT * FROM archive WHERE id = $sbutton");
-    $conn = $con->query("DELETE FROM archive WHERE id = $id ");    
+    $conn = $con->query("DELETE FROM archive WHERE id = $id ");
 
     if ($con->affected_rows < 1) {
         alert("Schedule Could Not Be Deleted. This Route Has Been Tied To Another Data!");
@@ -359,9 +358,8 @@ if (isset($_POST['res_train'],$_POST['rem_train'])) {
 if (isset($_POST['del_train'])) {
     $con = connect();
     $conn = $con->query("DELETE FROM archive WHERE id = '" . $_POST['del_train'] . "'");
-   
-        alert("Schedule will be permanently Deleted!");
-        load($_SERVER['PHP_SELF'] . "$me");
-    
+
+    alert("Schedule will be permanently Deleted!");
+    load($_SERVER['PHP_SELF'] . "$me");
 }
 ?>

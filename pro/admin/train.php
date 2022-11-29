@@ -15,111 +15,93 @@ $me = "?page=$source";
                             <h3 class="card-title">
                                 All Ferry</h3>
                             <div class='float-right'>
-                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
-                                    data-target="#add">
+                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#add">
                                     Add New Ferry &#128645;
-                                </button></div>
+                                </button>
+                            </div>
                         </div>
 
                         <div class="card-body">
-
-                            <table id="example1" style="align-items: stretch;"
-                                class="table table-hover w-100 table-bordered table-striped<?php //
-                                                                                                                                            ?>">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Ferry Name</th>
-                                        <th>First Class Seat</th>
-                                        <th>Second Class Seat</th>
-                                        <th style="width: 30%;">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $row = $conn->query("SELECT * FROM train");
-                                    if ($row->num_rows < 1) echo "No Records Yet";
-                                    $sn = 0;
-                                    while ($fetch = $row->fetch_assoc()) {
-                                        $id = $fetch['id'];
-                                    ?>
-
-                                    <tr>
-                                        <td><?php echo ++$sn; ?></td>
-                                        <td><?php echo $fullname = $fetch['name']; ?></td>
-                                        <td><?php echo $fetch['first_seat']; ?></td>
-                                        <td><?php echo $fetch['second_seat']; ?></td>
-                                        <td>
-                                            <form method="POST">
-                                                <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#edit<?php echo $fetch['id']; ?>">
-                                                    Edit
-                                                </button> -
-
-                                                <input type="hidden" class="form-control" name="del_train"
-                                                    value="<?php echo $id ?>" required id="">
-                                                <button type="submit"
-                                                    onclick="return confirm('Are you sure about this?')"
-                                                    class="btn btn-danger">
-                                                    Delete
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-
-                                    <div class="modal fade" id="edit<?php echo $id ?>">
-                                        <div class="modal-dialog modal-lg">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h4 class="modal-title">Editing <?php echo $fullname;
-
-
-                                                                                        ?></h4>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <form action="" method="post">
-                                                        <input type="hidden" class="form-control" name="id"
-                                                            value="<?php echo $id ?>" required id="">
-                                                        <p>Train Name : <input type="text" class="form-control"
-                                                                name="name" value="<?php echo $fetch['name'] ?>"
-                                                                required minlength="3" id=""></p>
-                                                        <p>First Class Capacity : <input type="number" min='0'
-                                                                class="form-control"
-                                                                value="<?php echo $fetch['first_seat'] ?>"
-                                                                name="first_seat" required id="">
-                                                        </p>
-                                                        <p> Class Capacity : <input type="number" min='0'
-                                                                class="form-control"
-                                                                value="<?php echo $fetch['second_seat'] ?>"
-                                                              name="second_seat" required id="">
-                                                        </p>
-                                                        <p>
-  
-                                                            <input class="btn btn-info" type="submit" value="Edit Train"
-                                                                name='edit'>
-                                                        </p>
-                                                    </form>
-                                                    <div class="modal-footer justify-content-between">
-                                                        <button type="button" class="btn btn-default"
-                                                            data-dismiss="modal">Close</button>
-                                                    </div>
-                                                </div>
-                                                <!-- /.modal-content -->
-                                            </div>
-                                            <!-- /.modal-dialog -->
-                                        </div>
-                                        <!-- /.modal -->
+                            <div class="table-responsive">
+                                <table id="example1" style="align-items: stretch;" class="table table-hover w-100 table-bordered table-striped<?php //
+                                                                                                                                                ?>">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Ferry Name</th>
+                                            <th>First Class Seat</th>
+                                            <th>Second Class Seat</th>
+                                            <th style="width: 30%;">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
                                         <?php
-                                    }
+                                        $row = $conn->query("SELECT * FROM train");
+                                        if ($row->num_rows < 1) echo "No Records Yet";
+                                        $sn = 0;
+                                        while ($fetch = $row->fetch_assoc()) {
+                                            $id = $fetch['id'];
                                         ?>
 
-                                </tbody>
-                               
-                            </table>
+                                            <tr>
+                                                <td><?php echo ++$sn; ?></td>
+                                                <td><?php echo $fullname = $fetch['name']; ?></td>
+                                                <td><?php echo $fetch['first_seat']; ?></td>
+                                                <td><?php echo $fetch['second_seat']; ?></td>
+                                                <td>
+                                                    <form method="POST">
+                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit<?php echo $fetch['id']; ?>">
+                                                            Edit
+                                                        </button> -
+
+                                                        <input type="hidden" class="form-control" name="del_train" value="<?php echo $id ?>" required id="">
+                                                        <button type="submit" onclick="return confirm('Are you sure about this?')" class="btn btn-danger">
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+
+                                            <div class="modal fade" id="edit<?php echo $id ?>">
+                                                <div class="modal-dialog modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h4 class="modal-title">Editing <?php echo $fullname;
+
+
+                                                                                            ?></h4>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form action="" method="post">
+                                                                <input type="hidden" class="form-control" name="id" value="<?php echo $id ?>" required id="">
+                                                                <p>Train Name : <input type="text" class="form-control" name="name" value="<?php echo $fetch['name'] ?>" required minlength="3" id=""></p>
+                                                                <p>First Class Capacity : <input type="number" min='0' class="form-control" value="<?php echo $fetch['first_seat'] ?>" name="first_seat" required id="">
+                                                                </p>
+                                                                <p> Class Capacity : <input type="number" min='0' class="form-control" value="<?php echo $fetch['second_seat'] ?>" name="second_seat" required id="">
+                                                                </p>
+                                                                <p>
+
+                                                                    <input class="btn btn-info" type="submit" value="Edit Train" name='edit'>
+                                                                </p>
+                                                            </form>
+                                                            <div class="modal-footer justify-content-between">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                            </div>
+                                                        </div>
+                                                        <!-- /.modal-content -->
+                                                    </div>
+                                                    <!-- /.modal-dialog -->
+                                                </div>
+                                                <!-- /.modal -->
+                                            <?php
+                                        }
+                                            ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
