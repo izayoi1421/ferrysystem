@@ -54,7 +54,7 @@ if (isset($_GET['reference'])) {
       $code = genCode($schedule_id, $user_id, $class);
       $seat = genSeat($schedule_id, $class, $number);
       $payment_id = $conn->insert_id;
-      if ($payment_id > 0) {
+      if ($payment_id >=  0) {
 
         $conn->query("INSERT INTO booked (payment_id, schedule_id, user_id, code, class, no, date, seat) VALUES ('$payment_id','$schedule_id', '$user_id', '$code', '$class', '$number', '$date' , '$seat')");
         unset($_SESSION['discount']);

@@ -49,23 +49,27 @@ if (!isset($file_access)) die("Direct File Access Denied");
                                 
 
                                 <?php
-                                    $free = connect()->query("SELECT COUNT(*) FROM schedule WHERE free = 1 && id = $schedule_id;")->fetch_array();
-                                    $check = count($free);
+    
+                                    $sql = "SELECT COUNT(free) as fcount FROM schedule WHERE free = 1";
+                                    $conn = connect()->query($sql);
+                                    $row = $conn->fetch_assoc();
+                                    echo $row['fcount'];
+                                                               
+
                                     $fee = ($_SESSION['amount'] = getFee($schedule_id, $class));
-                                    $check = count($free);
+                                    
                                     $discount = ($fee * $classification );
                                     
                                     echo $number," x ₱", $fee, " = ₱", ($fee * $number), "<hr/>";
-                                    echo $check;
 
                                     $fee = $fee * $number;
                                     $amount = intval($fee);
                                     $vat = ceil($fee * 0.01);
                                     echo "V.A.T Charges = ₱$vat<br/><br/><hr/>";
                                     echo "Discounted = ₱$discount<br/><br/><hr/>";
-                                    echo "Total = ₱", $total = ($amount - $discount) + $vat;
+                                    echo "Total = ₱", $total = 0;
                                     
-                                    $fee =  intval($total) . "00";
+                                    $fee =  intval($total) ."00";
                                     $_SESSION['amount'] =  $total;
                                     $_SESSION['original'] =  $fee;
                                     $_SESSION['schedule'] =  $schedule_id;
