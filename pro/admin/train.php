@@ -52,7 +52,7 @@ $me = "?page=$source";
                                         <td>
                                             <form method="POST">
                                                 <button type="button" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#edit<?php echo $id ?>">
+                                                    data-target="#edit<?php echo $fetch['id']; ?>">
                                                     Edit
                                                 </button> -
 
@@ -95,10 +95,10 @@ $me = "?page=$source";
                                                         <p> Class Capacity : <input type="number" min='0'
                                                                 class="form-control"
                                                                 value="<?php echo $fetch['second_seat'] ?>"
-                                                                name="second_seat" required id="">
+                                                              name="second_seat" required id="">
                                                         </p>
                                                         <p>
-
+  
                                                             <input class="btn btn-info" type="submit" value="Edit Train"
                                                                 name='edit'>
                                                         </p>
