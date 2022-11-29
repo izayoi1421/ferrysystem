@@ -439,7 +439,11 @@ function getFee($id, $type = 'second')
     $q = connect()->query("SELECT $type FROM schedule WHERE id = '$id'")->fetch_assoc();
     return $q[$type];
 }
-
+function getfreefareFromschedule($id)
+{
+    $fffs = connect()->query("SELECT free as id FROM schedule WHERE id = '$id'")->fetch_assoc();
+    return getfreefareFromschedule($fffs['free']);
+}
 function getTotalBookByType($id)
 {
 
@@ -904,6 +908,18 @@ function getFeedbacks()
 {
     $me = $_SESSION['user_id'];
     return connect()->query("SELECT * FROM feedback WHERE user_id = '$me'");
+}
+function sendUpdatePolicy($msg, $desc)
+{
+  $msg = connect()->real_escape_string($msg);
+  $$desc = connect()->real_escape_string($desc);
+  $stmt = connect()->query("INSERT INTO policy (policy, description) VALUES ('$desc', '$msg')");
+  if ($stmt) return 1;
+  return 0;
+}
+function getUpdatedPolicy()
+{
+  return connect()->query("SELECT * FROM policy");
 }
 
 function replyTo($id, $reply)

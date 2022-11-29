@@ -236,6 +236,8 @@ $fullname =  "System Administrator";
                 include 'admin/users.php';
             elseif ($_GET['page'] == 'route')
                 include 'admin/route.php';
+            elseif ($_GET['page'] == 'update_policy')
+                include 'admin/update_policy.php';
             elseif ($_GET['page'] == 'logout') {
                 @session_destroy();
                 echo "<script>alert('You are being logged out'); window.location='../';</script>";
@@ -245,6 +247,7 @@ $fullname =  "System Administrator";
 
             elseif ($_GET['page'] == 'feedback')
                 include 'admin/feedback.php';
+
 
             elseif ($_GET['page'] == 'search')
                 include 'admin/search.php';

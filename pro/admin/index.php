@@ -134,10 +134,10 @@ if (!isset($file_access)) die("Direct File Access Denied");
             $sql = "SELECT COUNT(cancel) as tcount FROM booked GROUP BY cancel";
             $conn = connect()->query($sql);
             $row = $conn->fetch_assoc();
+            $hakdoggi = $row; 
+            foreach ($hakdoggi as $i) {
 
-            foreach ($row as $i) {
-
-                $lcount[] = $row['tcount'];
+                $lcount[] = $hakdoggi;
             }
 
             $sql = "SELECT COUNT(cancel) as success_count FROM booked WHERE cancel = 0";

@@ -22,7 +22,40 @@ if (!isset($file_access)) die("Direct File Access Denied");
                         generates your ticket ID for you which you are required to bring to the station. <br>You are
                         allowed to view all your booking history by clicking on "View Bookings".
                     </div>
+                    <div class="card-body">
+                        
+
+
+                    </div>
                 </div>
+                <div class="card">
+                <div class="card-header alert-success">
+                        <h5 class="m-0">Rules and Policies</h5>
+                    </div>
+                <table class="table table-bordered" id=''>
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Policy</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $sn = 0;
+                                $query = getUpdatedPolicy();
+                                while ($row = $query->fetch_assoc()) {
+                                    $sn++;
+                                    echo "<tr>
+                                    <td>$sn</td>
+                                    <td><b>" . $row['description'] . "</b></td>
+                                    <td>" . ($row['policy'] == NULL ? '-- No Response Yet --' : $row['policy']) . "</b></td>
+                                    </tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+            </div>
             </div><?php
                     } else {
                         $class = $_POST['class'];
