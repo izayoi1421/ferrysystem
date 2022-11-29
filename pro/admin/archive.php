@@ -1,6 +1,6 @@
 <?php
 if (!isset($file_access)) die("Direct File Access Denied");
-$source = 'dynamic';
+$source = 'archive';
 $me = "?page=$source";
 if (isset($_GET['free'], $_GET['id'])) {
     $id = $_GET['id'];
@@ -24,16 +24,8 @@ if (isset($_GET['free'], $_GET['id'])) {
                     <div class="card card-success">
                         <div class="card-header">
                             <h3 class="card-title">
-                                All Dynamic Schedules</h3>
-                            <div class='float-right'>
-                                <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                    data-target="#add">
-                                    Add New One-Time Schedule &#128645;
-                                </button> - - - <button type="button" class="btn btn-primary btn-sm" data-toggle="modal"
-                                    data-target="#add2">
-                                    Add Range Schedule &#128645;
-                                </button>
-                            </div>
+                                Archive of Schedules
+                            </h3>                        
                         </div>
 
                         <div class="card-body">
@@ -50,13 +42,12 @@ if (isset($_GET['free'], $_GET['id'])) {
                                         <th>S.C Fee</th>
                                         <th>Total Bookings</th>
                                         <th>Date/Time</th>
-                                        <th>Actions</th>
-                                        <th>Free Fare</th>
+                                        <th>Actions</th>                            
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    $row = $conn->query("SELECT * FROM schedule ORDER BY id DESC");
+                                    $row = $conn->query("SELECT * FROM archive ORDER BY id DESC");
 
                                     if ($row->num_rows < 1) echo "No Records Yet";
                                     $sn = 0;
@@ -77,7 +68,7 @@ if (isset($_GET['free'], $_GET['id'])) {
                                             <form method="POST">
                                                 <button type="button" class="btn btn-primary" data-toggle="modal"
                                                     data-target="#edit<?php echo $id ?>">
-                                                    Edit
+                                                    Restore
                                                 </button> -
 
                                                 <input type="hidden" class="form-control" name="del_train"
@@ -88,26 +79,7 @@ if (isset($_GET['free'], $_GET['id'])) {
                                                     Delete
                                                 </button>
                                             </form>
-                                        </td>
-                                        <td>
-                                                <?php
-                                                    if ($fetch['free'] == 0) {
-                                                    ?>
-                                                <a href="admin.php?page=dynamic&free=1&id=<?php echo $id; ?>">
-                                                    <button
-                                                        onclick="return confirm('You are about to set the fare to free')"
-                                                        type="submit" class="btn btn-success">
-                                                        Enable Free Fare
-                                                    </button></a>
-                                                <?php } else { ?>
-                                                <a href="admin.php?page=dynamic&free=0&id=<?php echo $id; ?>">
-                                                    <button
-                                                        onclick="return confirm('You are about to disable free fare')"
-                                                        type="submit" class="btn btn-danger">
-                                                        Disable Free Fare
-                                                    </button></a>
-                                                <?php } ?>
-                                            </td>
+                                        </td>                                        
                                         
                                     </tr>
 
@@ -411,7 +383,6 @@ if (isset($_POST['submit'])) {
     } else {
         $conn = connect();
         $ins = $conn->prepare("INSERT INTO `schedule`(`train_id`, `route_id`, `date`, `time`, `first_fee`, `second_fee`) VALUES (?,?,?,?,?,?)");
-        $ins = $conn->prepare("INSERT INTO `archive`(`train_id`, `route_id`, `date`, `time`, `first_fee`, `second_fee`) VALUES (?,?,?,?,?,?)");
         $ins->bind_param("iissii", $train_id, $route_id, $date, $time, $first_fee, $second_fee);
         $ins->execute();
         alert("Schedule Added!");
@@ -497,7 +468,8 @@ if (isset($_POST['del_train'])) {
         alert("Schedule Could Not Be Deleted. This Route Has Been Tied To Another Data!");
         load($_SERVER['PHP_SELF'] . "$me");
     } else {
-
+        alert("Schedule Deleted!");
+        load($_SERVER['PHP_SELF'] . "$me");
     }
 }
 ?>
