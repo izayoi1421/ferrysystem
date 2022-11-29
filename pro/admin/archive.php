@@ -47,7 +47,7 @@ $me = "?page=$source";
                                                 $fullname = " Schedule" ?></td>
                                             <td>₱ <?php echo ($fetch['first_fee']); ?></td>
                                             <td>₱ <?php echo ($fetch['second_fee']); ?></td>
-                                            <td><?php $array = getTotalBookByType($id);
+                                            <td><?php $array = getTotalBookByType2($id);
                                                 echo (($array['first'] - $array['first_booked'])), " Seat(s) Available for First Class" . "<hr/>" . ($array['second'] - $array['second_booked']) . " Seat(s) Available for Second Class";
                                                 ?></td>
                                             <td><?php echo $fetch['date'], " / ", formatTime($fetch['time']); ?></td>
@@ -55,10 +55,12 @@ $me = "?page=$source";
                                             <td>
                                                 <form method="POST">
                                                     <input type="hidden" class="form-control" name="res_train" value="<?php echo $id ?>" required id="">
+                                                    <input type="hidden" class="form-control" name="rem_train" value="<?php echo $id ?>" required id="">
                                                     <button type="submit" class="btn btn-primary">
                                                         Restore
                                                     </button> -
-
+                                                </form>
+                                                <form method="POST">
                                                     <input type="hidden" class="form-control" name="del_train" value="<?php echo $id ?>" required id="">
                                                     <button type="submit" class="btn btn-danger">
                                                         Delete
@@ -336,17 +338,20 @@ if (isset($_POST['submit2'])) {
 }
 
 
-if (isset($_POST['res_train'])) {
+if (isset($_POST['res_train'],$_POST['rem_train'])) {
 
     $con = connect();
-    $conn = $con->query("DELETE FROM archive WHERE id = '" . $_POST['res_train'] . "' ");
-    $conn = $con->query("INSERT INTO schedule SELECT * FROM schedule");
+    $sbutton = $_POST['res_train'];
+    $id = $_POST['rem_train'];
+    $conn = $con->query("INSERT INTO schedule SELECT * FROM archive WHERE id = $sbutton");
+    $conn = $con->query("DELETE FROM archive WHERE id = $id ");    
+
     if ($con->affected_rows < 1) {
         alert("Schedule Could Not Be Deleted. This Route Has Been Tied To Another Data!");
         load($_SERVER['PHP_SELF'] . "$me");
     } else {
 
-        alert("Scheduled Restored!");
+        alert("Scheduled has been Restored!");
         load($_SERVER['PHP_SELF'] . "$me");
     }
 }
@@ -354,12 +359,9 @@ if (isset($_POST['res_train'])) {
 if (isset($_POST['del_train'])) {
     $con = connect();
     $conn = $con->query("DELETE FROM archive WHERE id = '" . $_POST['del_train'] . "'");
-    if ($con->affected_rows < 1) {
-        alert("Schedule Could Not Be Deleted. This Route Has Been Tied To Another Data!");
+   
+        alert("Schedule will be permanently Deleted!");
         load($_SERVER['PHP_SELF'] . "$me");
-    } else {
-        alert("Schedul was permanently Deleted!");
-        load($_SERVER['PHP_SELF'] . "$me");
-    }
+    
 }
 ?>

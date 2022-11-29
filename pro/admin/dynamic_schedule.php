@@ -79,7 +79,9 @@ if (isset($_GET['free'], $_GET['id'])) {
                                                     data-target="#edit<?php echo $id ?>">
                                                     Edit
                                                 </button> -
-
+                                                
+                                                <input type="hidden" class="form-control" name="insert_train"
+                                                    value="<?php echo $id ?>" required id="">
                                                 <input type="hidden" class="form-control" name="del_train"
                                                     value="<?php echo $id ?>" required id="">
                                                 <button type="submit"
@@ -488,12 +490,12 @@ if (isset($_POST['edit'])) {
     }
 }
   
-if (isset($_POST['del_train'])) {
+if (isset($_POST['del_train'],$_POST['insert_train'])) {
     $con = connect();
-    $sbutton = $_POST['del_train'];
-    $id = $sbutton;
-    $conn = $con->query("INSERT INTO archive SELECT * FROM schedule");
-    $conn = $con->query("DELETE FROM schedule WHERE id = $sbutton");
+    $sbutton = $_POST['insert_train'];
+    $id = $_POST['del_train'];
+    $conn = $con->query("INSERT INTO archive SELECT * FROM schedule WHERE id = $sbutton ");
+    $conn = $con->query("DELETE FROM schedule WHERE id = $id");
     
     
 

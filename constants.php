@@ -462,7 +462,24 @@ function getTotalBookByType($id)
     $num2 = intval($num2);
     return array("first" => $first, "second" => $second, "first_booked" => $num, "second_booked" => $num2);
 }
+function getTotalBookByType2($id)
+{
 
+    $con =  connect()->query("SELECT SUM(no) as no FROM `booked` WHERE schedule_id = '$id' AND class = 'second'")->fetch_assoc();
+    $con2 =  connect()->query("SELECT SUM(no) as no FROM `booked` WHERE schedule_id = '$id' AND class = 'first'")->fetch_assoc();
+    $no = $con['no'];
+    $no2 = $con2['no'];
+    $num = $no == null ? 0 :  $con['no'];
+    $num2 = $no2 == null ? 0 :  $con2['no'];
+    $qu = connect()->query("SELECT train.first_seat as first, train.second_seat as second FROM archive INNER JOIN train ON train.id = archive.train_id WHERE archive.id = '$id'")->fetch_assoc();
+    $first = $qu['first'];
+    $second = $qu['second'];
+    $first = intval($first);
+    $second = intval($second);
+    $num = intval($num);
+    $num2 = intval($num2);
+    return array("first" => $first, "second" => $second, "first_booked" => $num, "second_booked" => $num2);
+}
 function isScheduleActive($id)
 {
     $today = getToday();
