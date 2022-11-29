@@ -50,11 +50,15 @@ if (!isset($file_access)) die("Direct File Access Denied");
 
                                 <?php
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 46951defc0c6bb628811bffc99875225a71a6ea8
                                    $sql = "SELECT COUNT(id) as fcount FROM schedule WHERE free = 1 AND id = $schedule_id";
                                    $conn = connect()->query($sql);
                                    $row = $conn->fetch_assoc();
                                    $hakdoggi = $row['fcount'];
                                    $fee = ($_SESSION['amount'] = getFee($schedule_id, $class));
+<<<<<<< HEAD
                                     $discount = ($fee * $classification );
                                     if ($hakdoggi == 1){
                                         echo $number," x ₱", $fee, " = ₱", ($fee * $number), "<hr/>";
@@ -87,6 +91,17 @@ if (!isset($file_access)) die("Direct File Access Denied");
                                     
                                     $fee =  intval($total) ."00";
 >>>>>>> b6e5d64790fa9923f2a4a974cc83f7f8e1c622f8
+=======
+                                    $discount = ($fee * $classification );
+                                    if ($hakdoggi == 1){
+                                        echo $number," x ₱", $fee, " = ₱", ($fee * $number), "<hr/>";
+                                        $fee = $fee * $number;
+                                        $amount = intval($fee);
+                                        echo "V.A.T Charges = ₱$vat<br/><br/><hr/>";
+                                        echo "Discounted = ₱$discount<br/><br/><hr/>";
+                                        echo "Total = ₱", $total = 1;
+                                        $fee =  ($total) . "00";
+>>>>>>> 46951defc0c6bb628811bffc99875225a71a6ea8
                                     $_SESSION['amount'] =  $total;
                                     $_SESSION['original'] =  $fee;
                                     $_SESSION['schedule'] =  $schedule_id;
