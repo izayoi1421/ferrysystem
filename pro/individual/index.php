@@ -49,7 +49,7 @@ if (!isset($file_access)) die("Direct File Access Denied");
                                     echo "<tr>
                                     <td>$sn</td>
                                     <td><b>" . $row['description'] . "</b></td>
-                                    <td>" . ($row['policy'] == NULL ? '-- No Response Yet --' : $row['policy']) . "</b></td>
+                                    <td>" . ($row['entry'] == NULL ? '-- No Response Yet --' : $row['entry']) . "</b></td>
                                     </tr>";
                                 }
                                 ?>
