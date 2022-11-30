@@ -67,6 +67,7 @@ $me = $_SESSION['user_id'];
                                     $ncap_check =  connect()->query("SELECT SUM(no) as no FROM `booked` WHERE schedule_id = '$id' AND class = 'first'")->fetch_assoc();
                                     $maxcap = $mcap_check['first'];
                                     $occupied_seat = $ncap_check['no'];
+                                    echo $max_first,$array['first_booked'],$array['first'];                                    
                                     if($maxcap > $occupied_seat){                                             
                                 ?>
 
@@ -106,8 +107,9 @@ $me = $_SESSION['user_id'];
 
                                                 <p>Number of Tickets (If you are the only one, leave as it is) :
                                                     <input type="number" min='1' value="1"
-                                                        max='<?php echo $max_first >=  $array['first_booked'] ? $max_first :  $array['first_booked'] ?>'
+                                                        max='<?php $tempval=0; echo $max_first !=  $tempval ? $max_first : $tempval ?>'
                                                         name="number" class="form-control" id="">
+                                                        <?php echo $max_first,$array['first_booked']; ?>
                                                 </p>
                                                 <p>
                                                     Type of Discount : <select name="classification" required class="form-control" id="">
@@ -118,6 +120,9 @@ $me = $_SESSION['user_id'];
                                                 </p>
                                                 <p>
                                                     Available Seat : <input type="text" value="<?php echo 'Seat(s) Available: '.($max_first); ?>" class="form-control" id="" readonly disabled>
+                                                    <select name="class" required class="hide" id="" readonly>
+                                                        <option value="first">First Class (₱
+                                                            <?php echo ($fetch['first_fee']); ?>)</option>
 
                                                     </select>
                                                 </p>
@@ -148,3 +153,8 @@ $me = $_SESSION['user_id'];
     </form>
 
 </div>
+<style>
+.hide {
+  display:none;
+}
+</style>
