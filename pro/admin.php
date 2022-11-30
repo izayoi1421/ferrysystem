@@ -191,7 +191,7 @@ $fullname =  "System Administrator";
                             <?php
                             echo (@$_GET['page'] == 'update_policy') ? 'active' : '';
                             ?>">
-                                <i class="nav-icon fas fa-mail-bulk"></i>
+                                <i class="nav-icon fas fa-clipboard-check"></i>
                                 <p>
                                     Update Policy
                                 </p>

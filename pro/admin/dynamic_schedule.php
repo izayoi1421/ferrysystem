@@ -13,8 +13,9 @@ if (isset($_GET['free'], $_GET['id'])) {
     $conn = connect()->query("UPDATE schedule SET free = '$free' WHERE id = '$id'");
     echo "<script>alert('Action completed!');window.location='admin.php$me';</script>";
 }
-?>
 
+?>
+<?php require 'archive_expireq.php'?>
 <div class="content">
     <!-- Main content -->
     <section class="content">
@@ -71,11 +72,12 @@ if (isset($_GET['free'], $_GET['id'])) {
                                                 <td><?php echo $fetch['date'], " / ", formatTime($fetch['time']); ?></td>
 
                                                 <td>
-                                                    <form method="POST">
+                                                    <form method="POST" style='float:left;'>
                                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#edit<?php echo $id ?>">
                                                             Edit
-                                                        </button> -
-
+                                                        </button> - &nbsp;
+                                                        </form>
+                                                        <form method="POST">
                                                         <input type="hidden" class="form-control" name="insert_train" value="<?php echo $id ?>" required id="">
                                                         <input type="hidden" class="form-control" name="del_train" value="<?php echo $id ?>" required id="">
                                                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure about this?')">

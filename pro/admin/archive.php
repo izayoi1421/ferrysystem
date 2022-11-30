@@ -53,12 +53,14 @@ $me = "?page=$source";
                                                 <td><?php echo $fetch['date'], " / ", formatTime($fetch['time']); ?></td>
 
                                                 <td>
-                                                    <form method="POST">
+                                                    <form method="POST" style='float:left;'>
                                                         <input type="hidden" class="form-control" name="res_train" value="<?php echo $id ?>" required id="">
                                                         <input type="hidden" class="form-control" name="rem_train" value="<?php echo $id ?>" required id="">
                                                         <button type="submit" class="btn btn-primary">
                                                             Restore
-                                                        </button> -                                                    
+                                                        </button> - &nbsp; 
+                                                    </form>
+                                                    <form method="POST" style='float:left;'>
                                                         <input type="hidden" class="form-control" name="del_train" value="<?php echo $id ?>" required id="">
                                                         <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to permanently delete this schedule?')">
                                                             Delete
